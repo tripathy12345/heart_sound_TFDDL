@@ -1,0 +1,67 @@
+from numpy import mean
+from numpy import std
+import numpy as np
+from matplotlib import pyplot
+from sklearn.model_selection import KFold
+import tensorflow as tf
+from tensorflow import keras
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.models import Model
+from tensorflow.keras import backend as K
+from tensorflow.keras.optimizers import Adam
+import matplotlib.pyplot as plt
+import sklearn
+from sklearn.metrics import confusion_matrix
+from scipy.io import loadmat
+import numpy as np
+import PIL
+import cv2
+
+x = list()
+data = list()
+z = 0
+##Class-1 images##
+folder_path_class1 = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/github_database_5Class_complete/classification_scheme1/AS_FPCT/')
+folder_path_class2 = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/github_database_5Class_complete/classification_scheme1/MR_FPCT/')
+folder_path_class3 = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/github_database_5Class_complete/classification_scheme1/MS_FPCT/')
+folder_path_class4 = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/github_database_5Class_complete/classification_scheme1/MVP_FPCT/')
+folder_path_class5 = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/github_database_5Class_complete/classification_scheme1/Normal_FPCT/')
+#folder_path_class1b = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/Physionet_complete/scheme1/normal_TDPCT_SetA/')
+#folder_path_class2b = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/Physionet_complete/scheme1/normal_TDPCT_SetB/')
+#folder_path_class3b = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/Physionet_complete/scheme1/normal_TDPCT_SetC/')
+#folder_path_class4b = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/Physionet_complete/scheme1/normal_TDPCT_SetD/')
+#folder_path_class5b = ('/content/drive/MyDrive/PCG_signal_time_frequency_image/Physionet_complete/scheme1/normal_TDPCT_SetF/')
+
+paths = [folder_path_class1,folder_path_class2,folder_path_class3,folder_path_class4,folder_path_class5]
+#         folder_path_class1b,folder_path_class2b,folder_path_class3b,folder_path_class4b,folder_path_class5b,]
+for p in paths:
+  #print(p)
+  for image in os.walk(p):
+    data.append(image[2])
+    #print(image[2])
+
+  for i in range(len(data[0])):
+    str_complete = p + data[0][i]
+    #print(str_complete)
+    img = cv2.imread(str_complete)
+    img = cv2.resize(img, (128, 128))
+    x.append(img)#Ensure all images are loaded
+  data = []
+
+data_x = np.asarray(x)
+np.save('/content/drive/MyDrive/PCG_signal_time_frequency_image/github_database_5Class_complete/classification_scheme1/scheme1_x',data_x)
+
+y = np.ones([1000])
+y[:200] =0
+y[200:400]=1
+y[400:600]=2
+y[600:800]=3
+y[800:1000]=4
+np.save('/content/drive/MyDrive/PCG_signal_time_frequency_image/github_database_5Class_complete/classification_scheme1/scheme1_y',y) 
